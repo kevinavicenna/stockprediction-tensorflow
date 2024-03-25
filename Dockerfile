@@ -3,10 +3,15 @@ FROM tensorflow/tensorflow:latest
 
 # Install dependencies yang dibutuhkan :D
 RUN apt-get update && apt-get install -y \
-    python3-pip \
-    && pip3 install --upgrade pip \
-    && pip3 install streamlit yfinance pandas numpy matplotlib \
-    seaborn plotly statsmodels scikit-learn plotly_express
+     python3-pip \
+     && pip3 install --upgrade pip \
+     && pip3 install streamlit yfinance pandas numpy matplotlib \
+     seaborn plotly statsmodels scikit-learn plotly_express
+
+#RUN apt-get update && apt-get install -y \
+#    python3-pip \
+#    && pip3 install --upgrade pip \
+#    && pip3 install -r requirement.txt
 
 # Tambahkan direktori kerja di dalam container
 WORKDIR /app

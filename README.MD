@@ -1,1 +1,3 @@
-Build With Love :love:
+# Implementation LSTM model for Forecasting
+### 'My Stock Forecast App' 
+
