@@ -1,0 +1,1 @@
+model yang bisa jalan lstm_one_testing.ipynb

@@ -1,0 +1,16 @@
+docker run -p 8501:8501 \
+    --name lstm-server \
+    --mount type=bind,source="D:\PROJECT SKRIPSI\Stock Forecasting App with streamlit With Docker\lstm_stock",target=/models/lstm_stock \
+    -e MODEL_NAME=lstm_stock \
+    --network jaringanku \
+    -t tensorflow/serving
+
+sudo docker run -p 8501:8501 \
+    --name lstm-server \
+    --mount type=bind,source="/run/media/kevin/DATA/PROJECT SKRIPSI/Stock Forecasting App with streamlit With Docker/lstm_stock",target=/models/lstm_stock \
+    -e MODEL_NAME=lstm_stock \
+    --network jaringanku \
+    -t tensorflow/serving
+
+docker build -t streamlittt .
+docker run -p 8502:8502 --name streamlit --network jaringan streamlittt

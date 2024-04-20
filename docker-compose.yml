@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  lstm-server:
+    image: tensorflow/serving
+    container_name: lstm-server
+    ports:
+      - "8501:8501"
+    volumes:
+      - /d/PROJECT SKRIPSI/Stock Forecasting App with streamlit With Docker/lstm_stock/:/models/lstm_stock
+    environment:
+      - MODEL_NAME=lstm_stock
+    networks:
+      - jaringanku
+
+  streamlit_stock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: streamlit_stock
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./home-page-stock-prediction:/app/home-page-stock-prediction
+    networks:
+      - jaringanku
+
+networks:
+  jaringanku:
+    driver: bridge
