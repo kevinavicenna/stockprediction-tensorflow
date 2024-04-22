@@ -20,8 +20,6 @@ services:
     container_name: streamlit_stock
     ports:
       - "8502:8502"
-    # volumes:
-    #   - ./home-page-stock-prediction:/app/home-page-stock-prediction
     networks:
       - jaringanku
 

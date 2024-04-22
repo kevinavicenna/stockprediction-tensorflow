@@ -9,8 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-import datetime
-from datetime import date, timedelta
+from datetime import date
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 from sklearn.preprocessing import MinMaxScaler
@@ -20,12 +19,12 @@ from tensorflow.keras.layers import LSTM, Dense
 
 
 st.set_page_config(
-    page_title="My Stock Forecast",
-    page_icon="🔫"
+    page_title="Dashboard",
+    page_icon="💹"
     )
 
 
-st.title("Stock Forecast for Market Indonesia")
+st.title("Dashboard")
 
 # Sidebar
 st.sidebar.title("Select the Parameters Below")
@@ -81,15 +80,13 @@ train_data, test_data = scaled_data[:train_size, :], scaled_data[train_size:, :]
 
 
 # Load LSTM model
-# url = "http://localhost:8501/v1/models/lstm_stock/metadata"
-url = "http://localhost:8501/v1/models/lstm_stock:predict"
-# url = "http://lstm-server:8501/v1/models/lstm_stock:predict"
+# url = "http://localhost:8501/v1/models/lstm_stock:predict"
+url = "http://lstm-server:8501/v1/models/lstm_stock:predict"
 
 response = requests.get(url)
 headers = {"content-type": "application/json"}
 signature_name = "serving_default"
 
-# Consider the first 10 data_test images 
 instances = test_data.reshape(-1, 1, 1).tolist()
 
 # Create a dictionary
@@ -100,26 +97,22 @@ data_dict = {
 data_json = json.dumps(data_dict)
 st.write("Data Json",data_json)
 
-st.write("Data Stock",data)
+st.write("Data Stock",data) # Stock data 
 
 response = requests.post(url, data=data_json, headers=headers)
 
 lstm_predictions = response.json()
-# st.write("lstm_predictions",lstm_predictions) # JSON
+# st.write("lstm_predictions",lstm_predictions) # JSON Output
 
 predictions_list = lstm_predictions["predictions"]
-# Convert the nested list into a flat list of floats
-flat_predictions = [item for sublist in predictions_list for item in sublist]
-# Convert the flat list to a numpy array
-lstm_predictions_array = np.array(flat_predictions)
-# Reshape the array to a column vector
-lstm_predictions_array = lstm_predictions_array.reshape(-1, 1)
-# Apply inverse transformation
-lstm_predictions = scaler.inverse_transform(lstm_predictions_array)
+flat_predictions = [item for sublist in predictions_list for item in sublist]  # Convert the nested list into a flat list of floats
+lstm_predictions_array = np.array(flat_predictions) # Convert the flat list to a numpy array
+lstm_predictions_array = lstm_predictions_array.reshape(-1, 1) # Reshape the array to a column vector
+lstm_predictions = scaler.inverse_transform(lstm_predictions_array) # inverse transformation
 # st.write(lstm_predictions) #Convert from json
-test_dates = pd.to_datetime(data["Date"].values[train_size:])
 
 # Create a new DataFrame with date and predictions
+test_dates = pd.to_datetime(data["Date"].values[train_size:])
 lstm_predictions_df = pd.DataFrame({"Date": test_dates, "Predicted_Price": lstm_predictions.flatten()})
 
 # Display the LSTM predictions

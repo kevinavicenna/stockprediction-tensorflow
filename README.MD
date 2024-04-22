@@ -1,3 +1,5 @@
 # Implementation LSTM model for Forecasting
-### 'My Stock Forecast App' 
+
+Tugas Akhir Semester 8  
+by : Kevin Avicenna Widiarto
 

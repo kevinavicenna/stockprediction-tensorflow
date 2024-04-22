@@ -3,13 +3,12 @@ import streamlit as st
 def run_program():
 
     st.set_page_config(
-    page_title="Indo Stock",
-    page_icon="🔫"
+    page_title="License",
+    page_icon="💹"
     )
 
     st.markdown("""<h1 style='text-align: center;'>License</h1>""", unsafe_allow_html=True)
-    # st.image("https://th.bing.com/th/id/OIG3.6QjRqg5YProOXqaHU0nW?w=1024&h=1024&rs=1&pid=ImgDetMain")
-    
+ 
     st.write("""
     MIT License
 
