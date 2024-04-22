@@ -2,6 +2,7 @@
 .ipynb_checkpoints/
 .vscode/
 
+backup/
 venv/
 src/
 test/

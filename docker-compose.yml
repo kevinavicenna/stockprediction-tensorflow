@@ -7,7 +7,7 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - /d/PROJECT SKRIPSI/Stock Forecasting App with streamlit With Docker/lstm_stock/:/models/lstm_stock
+      - /d/PROJECT SKRIPSI/Stock Forecasting App With Docker/lstm_stock/:/models/lstm_stock
     environment:
       - MODEL_NAME=lstm_stock
     networks:
@@ -20,8 +20,8 @@ services:
     container_name: streamlit_stock
     ports:
       - "8502:8502"
-    volumes:
-      - ./home-page-stock-prediction:/app/home-page-stock-prediction
+    # volumes:
+    #   - ./home-page-stock-prediction:/app/home-page-stock-prediction
     networks:
       - jaringanku
 
