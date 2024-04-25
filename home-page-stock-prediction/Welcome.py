@@ -6,8 +6,11 @@ def run_program():
         page_icon="💹"
     )
     
+    url_img = "https://th.bing.com/th/id/OIG3.6QjRqg5YProOXqaHU0nW?w=1024&h=1024&rs=1&pid=ImgDetMain"
     st.markdown("""<h1 style='text-align: center;'>My Stock Forecast 💹</h1>""", unsafe_allow_html=True)
-    st.image("https://th.bing.com/th/id/OIG3.6QjRqg5YProOXqaHU0nW?w=1024&h=1024&rs=1&pid=ImgDetMain")
+    left, cent,last = st.columns(3)
+    with cent:
+            st.image(url_img,width=250)
         
     st.write("""
     ## Arsitecture LSTM (Long Short Term Memory)
@@ -42,7 +45,7 @@ def run_program():
     - Model Prediksi LSTM 
     
     Note: 
-    Kekurangan aplikasi hanya ditraining menggunakan satu data stock 
+    Kekurangan aplikasi hanya ditraining menggunakan satu data stock,
     Jika menggunakannya untuk stock lain kemungkinan besar hasilnya jauh berbeda
     Maka harus dilakukan training data ulang dengan data yang dituju
              """)

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   lstm-server:
@@ -7,7 +7,7 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - /d/PROJECT SKRIPSI/Stock Forecasting App With Docker/lstm_stock/:/models/lstm_stock
+      - ./lstm_stock/:/models/lstm_stock
     environment:
       - MODEL_NAME=lstm_stock
     networks:

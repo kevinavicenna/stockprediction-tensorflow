@@ -13,10 +13,6 @@ from datetime import date
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 from sklearn.preprocessing import MinMaxScaler
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
-
 
 st.set_page_config(
     page_title="Dashboard",
@@ -95,9 +91,10 @@ data_dict = {
     "instances": instances
 }
 data_json = json.dumps(data_dict)
-st.write("Data Json",data_json)
 
-st.write("Data Stock",data) # Stock data 
+st.write("### JSON Data input for prediction")
+st.write(data_json)
+
 
 response = requests.post(url, data=data_json, headers=headers)
 
@@ -109,20 +106,21 @@ flat_predictions = [item for sublist in predictions_list for item in sublist]  #
 lstm_predictions_array = np.array(flat_predictions) # Convert the flat list to a numpy array
 lstm_predictions_array = lstm_predictions_array.reshape(-1, 1) # Reshape the array to a column vector
 lstm_predictions = scaler.inverse_transform(lstm_predictions_array) # inverse transformation
-# st.write(lstm_predictions) #Convert from json
+# st.write(lstm_predictions) #result convert from json
 
 # Create a new DataFrame with date and predictions
 test_dates = pd.to_datetime(data["Date"].values[train_size:])
 lstm_predictions_df = pd.DataFrame({"Date": test_dates, "Predicted_Price": lstm_predictions.flatten()})
 
 # Display the LSTM predictions
-st.write("## Result LSTM Prediction")
+st.write("### Result LSTM Prediction")
 st.write(lstm_predictions_df)
 st.write("---")
 
 # Plot the LSTM predictions
+st.write("### Visualization Actual Data vs LSTM Predictions")
 fig_lstm = go.Figure()
 fig_lstm.add_trace(go.Scatter(x=data["Date"], y=data[columns], name="Actual Data"))
 fig_lstm.add_trace(go.Scatter(x=lstm_predictions_df["Date"], y=lstm_predictions_df["Predicted_Price"], name="LSTM Predictions", mode="lines", line=dict(color="Red")))
-fig_lstm.update_layout(title_text="Vizualization Actual Data vs LSTM Predictions", xaxis_title="Date", yaxis_title="Price", width=1000, height=400)
+fig_lstm.update_layout(xaxis_title="Date", yaxis_title="Price", width=1000, height=400)
 st.plotly_chart(fig_lstm)
